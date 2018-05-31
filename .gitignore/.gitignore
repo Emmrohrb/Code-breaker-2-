@@ -1,0 +1,112 @@
+//Code Breaker 2: The Hiding Words
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>  // libarys 
+#include <ctime>
+#include <cctype>
+#include <cstdlib>
+using namespace std;
+
+
+int main()
+{
+	//setup 
+	//LOOP FOR 3 TIMES
+	for (int i = 1; i <= 3; i++)
+	{
+		const int MAX_WRONG = 8; // Max wrong
+		vector<string> words;
+		words.push_back("INVISABLE");  // words that are hidden and are spy themed. 
+		words.push_back("HIDDEN");
+		words.push_back("FILES");
+		words.push_back("NSA");
+		words.push_back("CIA");
+		words.push_back("CIGAR");
+		words.push_back("SHROUD");
+		words.push_back("DISGUISE");
+		words.push_back("SILENCER");
+		words.push_back("AWAY");
+		srand(static_cast<unsigned int>(time(0)));
+		random_shuffle(words.begin(), words.end());
+		const string THE_WORD = words[0];
+		int wrong = 0;
+		string soFar(THE_WORD.size(), '-');
+		string used = "";
+
+
+
+		// The greeting for bootup
+		cout << "WELCOME AGENT TO CODE BREAKER!\n";
+
+		//main loop
+		while ((wrong < MAX_WRONG) && (soFar != THE_WORD))
+		{
+			cout << "/n/nYour have " << (MAX_WRONG - wrong);
+			cout << " incorrect guesses left.\n";
+			cout << "\nYou have used the following letters:\n" << used << endl;
+
+			char guess;
+			cout << "\n\nEnter your guess: ";  // enter guesses 
+			cin >> guess;
+			guess = toupper(guess); //makes word hidden
+			while (used.find(guess) != string::npos)
+			{
+				cout << "\You have already guessed" << guess << endl;
+				cout << "Enter your guess: ";
+				cin >> guess;
+				guess = toupper(guess);
+			}
+			used += guess;
+			if (THE_WORD.find(guess) != string::npos)
+			{
+				cout << "that's right! " << guess << "is in the word.\n";
+				//update soFar to include new letters 
+				for (int i = 0; i < THE_WORD.length(); ++i)
+				{
+					if (THE_WORD[i] == guess)
+					{
+						soFar[i] = guess;
+					}
+				}
+			}
+			else
+			{
+
+
+
+				{
+					cout << "Sorry, " << guess << "isn't in the word.\n ";
+					++wrong;  //wrong guess responce 
+
+				}
+
+
+
+			}
+
+
+
+
+		}
+		//shut down or Victory
+		if (wrong == MAX_WRONG)
+		{
+			cout << "\nYOU've been logged out YOU FAIL THE KEYWORDS 2 COURSE!";
+			// You fail message
+		}
+		else
+		{
+			{
+				cout << "\nYou found the password!"; // You win massage
+			}
+			cout << "\nThe word was " << THE_WORD << endl;
+		}
+		
+	}
+	
+	return 0;
+}
